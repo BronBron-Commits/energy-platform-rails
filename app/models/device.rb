@@ -1,3 +1,5 @@
 class Device < ApplicationRecord
-validates :name, presence: true
+  has_many :energy_readings, dependent: :destroy
+
+  validates :name, presence: true
 end
