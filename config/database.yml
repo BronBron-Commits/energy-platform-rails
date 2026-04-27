@@ -1,0 +1,21 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8mb4
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: root
+  password: password
+  host: 127.0.0.1
+
+development:
+  <<: *default
+  database: energy_platform_rails_development
+
+test:
+  <<: *default
+  database: energy_platform_rails_test
+
+production:
+  <<: *default
+  database: energy_platform_rails_production
+  username: energy_platform_rails
+  password: <%= ENV['ENERGY_PLATFORM_RAILS_DATABASE_PASSWORD'] %>

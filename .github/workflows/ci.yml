@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ROOT_PASSWORD: password
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2
+          bundler-cache: true
+
+      - name: Configure DB
+        run: |
+          cp config/database.yml config/database.yml.bak
+          sed -i 's/password:.*/password: password/' config/database.yml
+          sed -i 's/host:.*/host: 127.0.0.1/' config/database.yml
+
+      - name: Run tests
+        run: |
+          bin/rails db:create
+          bin/rails db:migrate
+          bin/rspec
