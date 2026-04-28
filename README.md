@@ -1,7 +1,3 @@
-Here’s a **clean, production-quality README** tailored to what you actually built (not generic boilerplate). You can copy/paste this directly into your repo.
-
----
-
 # ⚡ Energy Platform Rails
 
 A production-style Ruby on Rails application deployed on AWS, designed to simulate infrastructure used in modern energy platforms.
